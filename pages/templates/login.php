@@ -8,14 +8,13 @@
 </head>
 <body>
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-        <div class="logo"></div>
-        <div class="login-block">
             <h1>Login</h1>
             <form id="login" method="POST" onsubmit="return submitLoginForm()">
-                <input type="text" value="" name="username" placeholder="Username" id="username" />
-                <input type="password" value="" name="password" placeholder="Password" id="password" />
+                <input type="text" value="tuan " name="username" placeholder="Username" id="username" />
+                <input type="password" value="123456" name="password" placeholder="Password" id="password" />
 
                 <button type="submit" form="login">Submit</button>
+                <input type="submit" value="Đăng nhập">
             </form>
         </div>
 
@@ -24,7 +23,7 @@
         <script>
                 function submitLoginForm() {
                 console.log('hello');
-                alert($('#login').serialize());
+                //alert($('#login').serialize());
                 $.ajax({
                     url: 'http://45.119.82.176:8000/login/user/',
                     type: "post",
