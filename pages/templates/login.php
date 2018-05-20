@@ -1,60 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <title><?php echo $pageTitle ?></title>
-    <!-- Bootstrap -->
-    <link href="<?php echo CSS ?>/bootstrap.min.css" rel="stylesheet">
-    <!-- Style CSS -->
-    <link href="<?php echo CSS ?>/style.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
-    <!-- FontAwesome CSS -->
-    <link href="<?php echo CSS ?>/font-awesome.min.css" rel="stylesheet">
-    <!-- Fontello CSS -->
-    <link rel="stylesheet" type="text/css" href="<?php echo CSS ?>/fontello.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <title>Login V1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="<?php echo CSS ?>/login.css">
 </head>
+<body>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <div class="logo"></div>
+        <div class="login-block">
+            <h1>Login</h1>
+            <form id="login" method="POST" onsubmit="return submitLoginForm()">
+                <input type="text" value="" name="username" placeholder="Username" id="username" />
+                <input type="password" value="" name="password" placeholder="Password" id="password" />
 
-<body class="bg-primary pdt100">
-    <div class="content">
-        <div class="container">
-            <div class="row">
-                <!-- login-form -->
-                <div class="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
-                    <div class="login-form">
-                        <h2 class="text-center mb30">Sign in to CoinTrade</h2>
-                        <form onsubmit = "return submitLoginForm()" method = "POST">
-                            <div class="form-group">
-                                <label class="control-label sr-only" for="email"></label>
-                                <input id="email1" type="text"  placeholder="Email" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label sr-only" for="password"></label>
-                                <input id="password1" type="password" placeholder="create password" class="form-control" required>
-                            </div>
-                            <span>
-                                <input id="box1" type="checkbox" class="with-font">
-                                <label for="box1">Keep me signed in on this computer</label>
-                          </span>
-                            <button id = "signin" type="text"  class="btn btn-default btn-lg  btn-block mt20">Sign in</button>
-                        </form>
-                    </div>
-                    <p class="text-white">Not a member? <a href="<?php echo MAIN_URL ?>/signup" class="text-yellow">Sign up</a><span class="pull-right"><a href="<?php echo MAIN_URL ?>/home" class="text-white">Back to Home</a> </span></p>
-                </div>
-                <!-- /.login-form -->
-            </div>
+                <button type="submit" form="login">Submit</button>
+            </form>
         </div>
-    </div>
-    <script src="<?php echo JS ?>/jquery.min.js"></script>
-    
-    <script src="<?php echo JS ?>/login.js"></script>
-</body>
 
+        <script src="<?php echo JS ?>/jquery.min.js"></script>
+
+        <script>
+                function submitLoginForm() {
+                console.log('hello');
+                alert($('#login').serialize());
+                $.ajax({
+                    url: 'http://45.119.82.176:8000/login/user/',
+                    type: "post",
+                    data: $('#login').serialize(),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        console.log(response);
+                        if (("token" in response) == false) {
+                        } else {
+                            __token = response.token;
+                            localStorage.setItem("token" , __token);
+                            localStorage.setItem("login_time" , Math.floor(Date.now() / 1000));
+                            console.log(__token);
+                            window.location.href = 'https://google.com/';
+                        }
+                    },
+                    error: function (a, b, c) {
+                       alert(JSON.stringify(a));
+                    }
+                 });
+            }
+        </script>
+</body>
 </html>
